@@ -115,7 +115,7 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
         )}
         {messages.length === 0 && !loading && (
           <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-3xl font-extrabold text-accent mb-2 drop-shadow">Welcome to S.E.R.E.N.A. <span>💬🤗🌱</span></div>
+            <div className="text-3xl font-extrabold text-accent mb-2 drop-shadow">Welcome to S.E.R.E.N.A <span>💬🤗🌱</span></div>
             <div className="text-lg text-calmPurple font-medium bg-calmGray/80 px-6 py-3 rounded-2xl shadow mt-2">To start chatting, type something in the text box below. <span>👇✨</span></div>
           </div>
         )}
