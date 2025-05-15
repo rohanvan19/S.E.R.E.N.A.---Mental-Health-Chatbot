@@ -1,0 +1,13 @@
+{
+  "name": "serena-database",
+  "version": "1.0.0",
+  "main": "init.js",
+  "license": "MIT",
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0"
+  }
+}
