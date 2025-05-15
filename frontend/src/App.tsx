@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { FiSend } from 'react-icons/fi';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 import Sidebar from './components/Sidebar';
 import './App.css';
 
@@ -68,9 +70,21 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
   return (
     <main className="chat-bg flex-1 flex flex-col h-full p-8">
       <div className="flex-1 overflow-y-auto space-y-4 mb-4 hide-scrollbar">
-        {/* Date separator at the top */}
-        <div className="flex justify-center mb-6">
+        {/* Header with logo, date, and developer info */}
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-3xl font-extrabold text-accent">
+            S.E.R.E.N.A
+          </h1>
           <span className="bg-calmGray text-calmPurple px-4 py-1 rounded-xl text-sm font-semibold shadow">{firstMsgDate}</span>
+          <div className="flex items-center gap-4">
+            <span className="text-sm text-gray-600">Developed with ❤️ by <span className="font-bold">Rohan Vanmali</span></span>
+            <a href="https://www.linkedin.com/in/vanmalirohan20/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmBlue transition">
+              <FaLinkedin size={20} />
+            </a>
+            <a href="https://github.com/rohanvan19" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmPurple transition">
+              <FaGithub size={20} />
+            </a>
+          </div>
         </div>
         {messages.map((msg: Message, i: number) => {
           // Only show date separator if the date changes between two consecutive messages (not for the first message)
@@ -242,15 +256,17 @@ function App() {
   return (
     <div className="flex h-screen font-sans" style={{ fontFamily: 'Inter, Segoe UI, system-ui, sans-serif' }}>
       <Sidebar onNewChat={handleNewChat} />
-      <ChatArea
-        messages={messages}
-        onSend={sendMessage}
-        input={input}
-        setInput={setInput}
-        suggestions={suggestions}
-        onSuggestionClick={handleSuggestionClick}
-        loading={loading}
-      />
+      <div className="flex flex-col flex-1">
+        <ChatArea
+          messages={messages}
+          onSend={sendMessage}
+          input={input}
+          setInput={setInput}
+          suggestions={suggestions}
+          onSuggestionClick={handleSuggestionClick}
+          loading={loading}
+        />
+      </div>
     </div>
   );
 }
