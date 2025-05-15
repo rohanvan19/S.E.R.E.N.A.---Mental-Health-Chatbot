@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { FiSend } from 'react-icons/fi';
+import { FiSend, FiMenu, FiX } from 'react-icons/fi';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import Sidebar from './components/Sidebar';
@@ -19,25 +19,27 @@ interface Suggestion {
 }
 
 const Suggestions = ({ suggestions, onSuggestionClick }: { suggestions: Suggestion[], onSuggestionClick: (s: Suggestion) => void }) => (
-  <div className="bg-calmGray p-4 rounded-2xl shadow mt-4 flex gap-4">
-    {suggestions.map((s, i) => (
-      <div
-        key={i}
-        className="flex-1 bg-white rounded-2xl p-3 shadow hover:shadow-md transition cursor-pointer"
-        onClick={() => onSuggestionClick(s)}
-      >
-        <h4 className={`font-semibold ${s.type === 'article' ? 'text-calmBlue' : s.type === 'exercise' ? 'text-calmGreen' : 'text-calmPurple'}`}>{s.title}</h4>
-        <p className="text-xs text-gray-500">{s.type.charAt(0).toUpperCase() + s.type.slice(1)}</p>
-      </div>
-    ))}
+  <div className="bg-calmGray p-2 sm:p-4 rounded-xl sm:rounded-2xl shadow mt-2 sm:mt-4">
+    <div className="grid grid-cols-2 sm:flex sm:flex-row gap-2 sm:gap-4">
+      {suggestions.map((s, i) => (
+        <div
+          key={i}
+          className="bg-white rounded-lg sm:rounded-xl p-1.5 sm:p-3 shadow hover:shadow-md transition cursor-pointer"
+          onClick={() => onSuggestionClick(s)}
+        >
+          <h4 className={`font-semibold text-[11px] sm:text-sm truncate ${s.type === 'article' ? 'text-calmBlue' : s.type === 'exercise' ? 'text-calmGreen' : 'text-calmPurple'}`}>{s.title}</h4>
+          <p className="text-[9px] sm:text-xs text-gray-500 truncate">{s.type.charAt(0).toUpperCase() + s.type.slice(1)}</p>
+        </div>
+      ))}
+    </div>
   </div>
 );
 
 const LoadingDots = () => (
-  <span className="inline-flex gap-1">
-    <span className="w-2 h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0s' }}></span>
-    <span className="w-2 h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
-    <span className="w-2 h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
+  <span className="inline-flex gap-0.5 sm:gap-1">
+    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0s' }}></span>
+    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-calmPurple rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
   </span>
 );
 
@@ -68,34 +70,35 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
   let lastDate = '';
 
   return (
-    <main className="chat-bg flex-1 flex flex-col h-full p-8">
-      <div className="flex-1 overflow-y-auto space-y-4 mb-4 hide-scrollbar">
+    <main className="chat-bg flex-1 flex flex-col h-full p-4 sm:p-6 lg:p-8">
+      <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 mb-2 sm:mb-4 hide-scrollbar">
         {/* Header with logo, date, and developer info */}
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-extrabold text-accent">
+        <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-accent text-center">
             S.E.R.E.N.A
           </h1>
-          <span className="bg-calmGray text-calmPurple px-4 py-1 rounded-xl text-sm font-semibold shadow">{firstMsgDate}</span>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">Developed with ❤️ by <span className="font-bold">Rohan Vanmali</span></span>
-            <a href="https://www.linkedin.com/in/vanmalirohan20/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmBlue transition">
-              <FaLinkedin size={20} />
-            </a>
-            <a href="https://github.com/rohanvan19" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmPurple transition">
-              <FaGithub size={20} />
-            </a>
+          <div className="flex flex-col items-center sm:flex-row sm:items-center gap-2 sm:gap-4">
+            <span className="text-xs sm:text-sm text-gray-600 text-center">Developed with ❤️ by <span className="font-bold">Rohan Vanmali</span></span>
+            <div className="flex gap-2">
+              <a href="https://www.linkedin.com/in/vanmalirohan20/" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmBlue transition">
+                <FaLinkedin size={16} className="sm:w-5 sm:h-5" />
+              </a>
+              <a href="https://github.com/rohanvan19" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-calmPurple transition">
+                <FaGithub size={16} className="sm:w-5 sm:h-5" />
+              </a>
+            </div>
           </div>
+          <span className="bg-calmGray text-calmPurple px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold shadow">{firstMsgDate}</span>
         </div>
         {messages.map((msg: Message, i: number) => {
-          // Only show date separator if the date changes between two consecutive messages (not for the first message)
           let dateSep = null;
           if (i > 0 && msg.created_at && messages[i - 1].created_at) {
             const prevDate = formatDate(messages[i - 1].created_at);
             const currDate = formatDate(msg.created_at);
             if (currDate !== prevDate) {
               dateSep = (
-                <div className="flex justify-center my-4" key={`date-${i}`}> 
-                  <span className="bg-calmGray text-calmPurple px-4 py-1 rounded-xl text-sm font-semibold shadow">{currDate}</span>
+                <div className="flex justify-center my-3 sm:my-4" key={`date-${i}`}> 
+                  <span className="bg-calmGray text-calmPurple px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold shadow">{currDate}</span>
                 </div>
               );
             }
@@ -103,14 +106,11 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
           return (
             <React.Fragment key={i}>
               {dateSep}
-              <div className={`flex items-start gap-3 ${msg.sender === 'user' ? 'flex-row-reverse' : ''}`}>
-                <div className={`w-14 h-14 rounded-full flex items-center justify-center font-bold text-white text-2xl ${msg.sender === 'user' ? 'bg-calmGreen' : 'bg-calmPurple'}`}>
-                  {msg.sender === 'user' ? 'U' : 'S'}
-                </div>
-                <div className="flex flex-col justify-center">
-                  <div className={`${msg.sender === 'user' ? 'bg-calmGreen/30' : 'bg-white/80'} rounded-2xl p-4 shadow max-w-xl flex flex-col`}>
-                    <p className="text-black">{msg.content}</p>
-                    <span className="text-[10px] text-gray-400 mt-1 self-end">{formatTime(msg.created_at)}</span>
+              <div className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%] sm:max-w-xl`}>
+                  <div className={`${msg.sender === 'user' ? 'bg-calmGreen/30' : 'bg-white/80'} rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow flex flex-col`}>
+                    <p className="text-black text-sm sm:text-base break-words">{msg.content}</p>
+                    <span className="text-[9px] sm:text-[10px] text-gray-400 mt-1 self-end">{formatTime(msg.created_at)}</span>
                   </div>
                 </div>
               </div>
@@ -118,37 +118,38 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
           );
         })}
         {loading && (
-          <div className="flex items-start gap-3">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-white text-2xl bg-calmPurple">
-              S
-            </div>
-            <div className="bg-white/80 rounded-2xl p-4 shadow max-w-xl">
+          <div className="flex justify-start">
+            <div className="bg-white/80 rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow max-w-[85%] sm:max-w-xl">
               <LoadingDots />
             </div>
           </div>
         )}
         {messages.length === 0 && !loading && (
           <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-3xl font-extrabold text-accent mb-2 drop-shadow">Welcome to S.E.R.E.N.A <span>💬🤗🌱</span></div>
-            <div className="text-lg text-calmPurple font-medium bg-calmGray/80 px-6 py-3 rounded-2xl shadow mt-2">To start chatting, type something in the text box below. <span>👇✨</span></div>
+            <div className="text-2xl sm:text-3xl font-extrabold text-accent mb-2 drop-shadow text-center">Welcome to S.E.R.E.N.A <span>💬🤗🌱</span></div>
+            <div className="text-sm sm:text-lg text-calmPurple font-medium bg-calmGray/80 px-4 sm:px-6 py-2 sm:py-3 rounded-2xl shadow mt-2 text-center">To start chatting, type something in the text box below. <span>👇✨</span></div>
           </div>
         )}
         <div ref={messagesEndRef} />
       </div>
       {/* Typing box and suggestions container */}
-      <div className="w-full flex flex-col items-center mt-4">
-        <div className="w-full bg-white/90 shadow-lg rounded-2xl p-4 flex flex-col gap-2">
+      <div className="w-full flex flex-col items-center mt-2 sm:mt-4">
+        <div className="w-full bg-white/90 shadow-lg rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col gap-2">
           <form className="flex gap-2" onSubmit={onSend}>
             <input
               type="text"
               placeholder="Type your message..."
-              className="flex-1 p-3 rounded-2xl border border-calmGray focus:outline-none focus:ring-2 focus:ring-accent bg-white/80"
+              className="flex-1 p-2 sm:p-3 rounded-xl sm:rounded-2xl border border-calmGray focus:outline-none focus:ring-2 focus:ring-accent bg-white/80 text-sm sm:text-base"
               value={input}
               onChange={e => setInput(e.target.value)}
               disabled={loading}
             />
-            <button type="submit" className="bg-accent text-white px-6 py-3 rounded-2xl font-semibold hover:bg-calmPurple transition flex items-center justify-center" disabled={loading || !input.trim()}>
-              {loading ? '...' : <FiSend size={22} />}
+            <button 
+              type="submit" 
+              className="bg-accent text-white px-3 sm:px-6 py-2 sm:py-3 rounded-xl sm:rounded-2xl font-semibold hover:bg-calmPurple transition flex items-center justify-center min-w-[40px] sm:min-w-[48px]" 
+              disabled={loading || !input.trim()}
+            >
+              {loading ? '...' : <FiSend size={18} className="sm:w-5 sm:h-5" />}
             </button>
           </form>
           <Suggestions suggestions={suggestions} onSuggestionClick={onSuggestionClick} />
@@ -160,11 +161,21 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
 
 function App() {
   const [sessionId, setSessionId] = useState<string | null>(localStorage.getItem('serena_sessionId'));
-  const [chatId, setChatId] = useState<number | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(window.innerWidth >= 1024);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
-  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
+
+  // Add resize listener
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarOpen(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // On mount, restore sessionId
   useEffect(() => {
@@ -175,16 +186,15 @@ function App() {
 
   // Persist chatId to localStorage
   useEffect(() => {
-    if (chatId !== null) {
-      localStorage.setItem('serena_chatId', chatId.toString());
+    if (sessionId) {
+      localStorage.setItem('serena_sessionId', sessionId);
     }
-  }, [chatId]);
+  }, [sessionId]);
 
   // Restore chatId and fetch chat history on mount (after sessionId is set)
   useEffect(() => {
     const storedChatId = localStorage.getItem('serena_chatId');
     if (storedChatId && sessionId) {
-      setChatId(Number(storedChatId));
       setSuggestions([]); // Clear suggestions before fetching new ones
       axios.get('http://localhost:3001/api/chat', {
         params: { sessionId, chatId: Number(storedChatId) }
@@ -205,11 +215,9 @@ function App() {
     try {
       const res = await axios.post('http://localhost:3001/api/chat', {
         sessionId,
-        chatId,
         message: input,
       });
       if (res.data.sessionId && !sessionId) setSessionId(res.data.sessionId);
-      if (res.data.chatId && !chatId) setChatId(res.data.chatId);
       setMessages(res.data.history);
       setSuggestions(res.data.suggestions || []);
     } catch (err) {
@@ -230,7 +238,6 @@ function App() {
 
   // New chat
   const handleNewChat = async () => {
-    setChatId(null);
     setMessages([]);
     setSuggestions([]);
     localStorage.removeItem('serena_chatId');
@@ -238,11 +245,9 @@ function App() {
     if (sessionId) {
       const res = await axios.post('http://localhost:3001/api/chat', {
         sessionId,
-        chatId: null,
         message: '', // No message, just want to create chat and get suggestions
       });
       if (res.data.chatId) {
-        setChatId(res.data.chatId);
         // Fetch suggestions and history for the new chat
         const getRes = await axios.get('http://localhost:3001/api/chat', {
           params: { sessionId, chatId: res.data.chatId }
@@ -255,7 +260,27 @@ function App() {
 
   return (
     <div className="flex h-screen font-sans" style={{ fontFamily: 'Inter, Segoe UI, system-ui, sans-serif' }}>
-      <Sidebar onNewChat={handleNewChat} />
+      {/* Mobile menu button */}
+      <button
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-lg bg-white shadow-md"
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+      >
+        {isSidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+      </button>
+
+      {/* Sidebar with responsive classes */}
+      <div className={`fixed lg:static inset-y-0 left-0 z-40 transform ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 transition-transform duration-300 ease-in-out`}>
+        <Sidebar onNewChat={handleNewChat} />
+      </div>
+
+      {/* Overlay for mobile */}
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 lg:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
       <div className="flex flex-col flex-1">
         <ChatArea
           messages={messages}

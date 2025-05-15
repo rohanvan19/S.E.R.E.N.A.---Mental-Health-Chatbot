@@ -34,9 +34,9 @@ const Sidebar: React.FC<SidebarProps> = ({ onNewChat }) => {
   ];
 
   return (
-    <div className="w-64 bg-white border-r border-calmGray h-full flex flex-col">
+    <div className="w-64 bg-white border-r border-calmGray h-full flex flex-col overflow-y-auto">
       {/* New Chat Button */}
-      <div className="p-4">
+      <div className="p-4 pt-14 lg:pt-4">
         <button
           onClick={onNewChat}
           className="w-full bg-accent text-white px-4 py-3 rounded-xl font-semibold hover:bg-calmPurple transition flex items-center justify-center gap-2"
@@ -45,7 +45,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onNewChat }) => {
           New Chat
         </button>
       </div>
-
       {/* Helpful Sources Section */}
       <div className="px-4 py-2">
         <h2 className="text-lg font-semibold text-calmPurple mb-3">Helpful Resources</h2>
@@ -69,7 +68,6 @@ const Sidebar: React.FC<SidebarProps> = ({ onNewChat }) => {
           ))}
         </div>
       </div>
-
       {/* Affirmations Section */}
       <div className="px-4 py-2 mt-4">
         <h2 className="text-lg font-semibold text-calmPurple mb-3">Daily Affirmations</h2>
