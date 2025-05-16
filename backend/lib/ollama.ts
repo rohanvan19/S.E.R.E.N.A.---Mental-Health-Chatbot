@@ -21,8 +21,9 @@ export async function getGemmaResponse(messages: { role: 'user' | 'assistant' | 
 
   // Node.js stream version
   let result = '';
+  const body = response.body as NodeJS.ReadableStream;
   return new Promise<string>((resolve, reject) => {
-    response.body.on('data', (chunk: Buffer) => {
+    body.on('data', (chunk: Buffer) => {
       const lines = chunk.toString('utf8').split('\n').filter(Boolean);
       for (const line of lines) {
         try {
@@ -33,7 +34,7 @@ export async function getGemmaResponse(messages: { role: 'user' | 'assistant' | 
         } catch {}
       }
     });
-    response.body.on('end', () => resolve(result.trim()));
-    response.body.on('error', reject);
+    body.on('end', () => resolve(result.trim()));
+    body.on('error', reject);
   });
 } 

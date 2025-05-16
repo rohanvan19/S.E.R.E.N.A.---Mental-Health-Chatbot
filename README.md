@@ -22,7 +22,7 @@ Millions of people worldwide struggle with depression, anxiety, and loneliness. 
 
 - **Frontend:** React, TypeScript, Tailwind CSS
 - **Backend:** Next.js (Node.js), SQLite
-- **AI Model:** Local LLMs (e.g., Gemma via Ollama)
+- **AI Model:** Local LLMs (Gemma via Ollama)
 - **Deployment:** Docker, Vercel/Netlify (frontend), Render/Heroku (backend)
 
 ---
@@ -33,7 +33,7 @@ Millions of people worldwide struggle with depression, anxiety, and loneliness. 
 - Modern, calming UI with a focus on user comfort
 - Motivational, positive, and empathetic responses
 - Suggestions for articles, meditation, and support groups
-- Persistent chat history and multi-chat support (in progress)
+- Persistent chat history and multi-chat support
 - Fast, local AI inference (no cloud API required)
 
 ---
@@ -43,12 +43,12 @@ Millions of people worldwide struggle with depression, anxiety, and loneliness. 
 ### **Requirements**
 - Node.js (v18+ recommended)
 - npm
-- [Ollama](https://ollama.com/) (for local LLMs, e.g., Gemma)
-- Docker (optional, for full-stack deployment)
+- [Ollama](https://ollama.com/) (for local LLMs)
+- Git
 
-### **Setup**
+### **Setup Steps**
 
-1. **Clone the repo:**
+1. **Clone the repository:**
    ```sh
    git clone https://github.com/YOUR_USERNAME/S.E.R.E.N.A.-Mental-Health-Chatbot.git
    cd S.E.R.E.N.A.-Mental-Health-Chatbot
@@ -56,49 +56,80 @@ Millions of people worldwide struggle with depression, anxiety, and loneliness. 
 
 2. **Install dependencies:**
    ```sh
+   # Install backend dependencies
    cd backend
    npm install
+   
+   # Install frontend dependencies
    cd ../frontend
    npm install
    ```
 
-3. **Set up the database:**
+3. **Set up Ollama:**
    ```sh
-   cd ../database
-   npm install
-   node init.js
+   # Install Ollama from https://ollama.com/
+   # Pull the Gemma model
+   ollama pull gemma3
    ```
 
-4. **Start Ollama and pull the Gemma model:**
+4. **Initialize the database:**
    ```sh
-   ollama pull gemma3
+   cd backend
+   npm run build
+   ```
+
+### **Running the Application**
+
+1. **Start Ollama (Port: 11434)**
+   ```sh
    ollama serve
    ```
+   - This will start the Ollama server at http://localhost:11434
+   - Keep this terminal window open
 
-5. **Start the backend:**
+2. **Start the Backend (Port: 3001)**
    ```sh
-   cd ../backend
-   npm run dev
-   # Or, to run on a different port:
-   # $env:PORT=3001; npm run dev   (on Windows PowerShell)
+   cd backend
+   $env:PORT=3001; npm run dev
    ```
+   - This will start the Next.js server at http://localhost:3001
+   - Keep this terminal window open
 
-6. **Start the frontend:**
+3. **Start the Frontend (Port: 3000)**
    ```sh
-   cd ../frontend
+   cd frontend
    npm start
    ```
+   - This will start the React app at http://localhost:3000
+   - The application will automatically open in your default browser
 
-7. **Open your browser and go to:**
+### **Port Configuration**
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+- Ollama: http://localhost:11434
+
+### **Troubleshooting**
+
+If you encounter port conflicts:
+1. Check if any process is using port 3000:
+   ```sh
+   netstat -ano | findstr :3000
    ```
-   http://localhost:3000
+2. Kill the process if needed:
+   ```sh
+   taskkill /F /PID <process_id>
    ```
+
+If Ollama shows "port already in use":
+1. Check if Ollama is already running
+2. Kill any existing Ollama processes
+3. Restart Ollama
 
 ---
 
 ## 📝 Future Improvements
 
-- Persistent chat history and multi-chat support (like ChatGPT)
+- Persistent chat history and multi-chat support
 - More personalized suggestions and resources
 - Mobile-friendly UI
 - Cloud deployment options
