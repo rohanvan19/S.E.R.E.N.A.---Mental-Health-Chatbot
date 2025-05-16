@@ -40,6 +40,9 @@
 .chat-bg {
   background: linear-gradient(135deg, #f5f6fa 0%, #e7eafc 100%);
   position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat-bg::before {
@@ -57,6 +60,9 @@
 .hide-scrollbar {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none;  /* IE 10+ */
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */

@@ -73,7 +73,7 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
     <main className="chat-bg flex-1 flex flex-col h-full p-4 sm:p-6 lg:p-8">
       <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 mb-2 sm:mb-4 hide-scrollbar">
         {/* Header with logo, date, and developer info */}
-        <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+        <div className="flex flex-col items-center sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6 sticky top-0 bg-gradient-to-b from-[#f5f6fa] to-transparent pb-4 z-10">
           <h1 className="text-2xl sm:text-3xl font-extrabold text-accent text-center">
             S.E.R.E.N.A
           </h1>
@@ -90,50 +90,52 @@ const ChatArea = ({ messages, onSend, input, setInput, suggestions, onSuggestion
           </div>
           <span className="bg-calmGray text-calmPurple px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold shadow">{firstMsgDate}</span>
         </div>
-        {messages.map((msg: Message, i: number) => {
-          let dateSep = null;
-          if (i > 0 && msg.created_at && messages[i - 1].created_at) {
-            const prevDate = formatDate(messages[i - 1].created_at);
-            const currDate = formatDate(msg.created_at);
-            if (currDate !== prevDate) {
-              dateSep = (
-                <div className="flex justify-center my-3 sm:my-4" key={`date-${i}`}> 
-                  <span className="bg-calmGray text-calmPurple px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold shadow">{currDate}</span>
-                </div>
-              );
+        <div className="flex-1">
+          {messages.map((msg: Message, i: number) => {
+            let dateSep = null;
+            if (i > 0 && msg.created_at && messages[i - 1].created_at) {
+              const prevDate = formatDate(messages[i - 1].created_at);
+              const currDate = formatDate(msg.created_at);
+              if (currDate !== prevDate) {
+                dateSep = (
+                  <div className="flex justify-center my-3 sm:my-4" key={`date-${i}`}> 
+                    <span className="bg-calmGray text-calmPurple px-3 py-1 rounded-xl text-xs sm:text-sm font-semibold shadow">{currDate}</span>
+                  </div>
+                );
+              }
             }
-          }
-          return (
-            <React.Fragment key={i}>
-              {dateSep}
-              <div className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%] sm:max-w-xl`}>
-                  <div className={`${msg.sender === 'user' ? 'bg-calmGreen/30' : 'bg-white/80'} rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow flex flex-col`}>
-                    <p className="text-black text-sm sm:text-base break-words">{msg.content}</p>
-                    <span className="text-[9px] sm:text-[10px] text-gray-400 mt-1 self-end">{formatTime(msg.created_at)}</span>
+            return (
+              <React.Fragment key={i}>
+                {dateSep}
+                <div className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`flex flex-col ${msg.sender === 'user' ? 'items-end' : 'items-start'} max-w-[85%] sm:max-w-xl`}>
+                    <div className={`${msg.sender === 'user' ? 'bg-calmGreen/30' : 'bg-white/80'} rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow flex flex-col`}>
+                      <p className="text-black text-sm sm:text-base break-words">{msg.content}</p>
+                      <span className="text-[9px] sm:text-[10px] text-gray-400 mt-1 self-end">{formatTime(msg.created_at)}</span>
+                    </div>
                   </div>
                 </div>
+              </React.Fragment>
+            );
+          })}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="bg-white/80 rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow max-w-[85%] sm:max-w-xl">
+                <LoadingDots />
               </div>
-            </React.Fragment>
-          );
-        })}
-        {loading && (
-          <div className="flex justify-start">
-            <div className="bg-white/80 rounded-xl sm:rounded-2xl p-2 sm:p-4 shadow max-w-[85%] sm:max-w-xl">
-              <LoadingDots />
             </div>
-          </div>
-        )}
-        {messages.length === 0 && !loading && (
-          <div className="flex flex-col items-center justify-center h-full">
-            <div className="text-2xl sm:text-3xl font-extrabold text-accent mb-2 drop-shadow text-center">Welcome to S.E.R.E.N.A <span>💬🤗🌱</span></div>
-            <div className="text-sm sm:text-lg text-calmPurple font-medium bg-calmGray/80 px-4 sm:px-6 py-2 sm:py-3 rounded-2xl shadow mt-2 text-center">To start chatting, type something in the text box below. <span>👇✨</span></div>
-          </div>
-        )}
-        <div ref={messagesEndRef} />
+          )}
+          {messages.length === 0 && !loading && (
+            <div className="flex flex-col items-center justify-center h-full">
+              <div className="text-2xl sm:text-3xl font-extrabold text-accent mb-2 drop-shadow text-center">Welcome to S.E.R.E.N.A <span>💬🤗🌱</span></div>
+              <div className="text-sm sm:text-lg text-calmPurple font-medium bg-calmGray/80 px-4 sm:px-6 py-2 sm:py-3 rounded-2xl shadow mt-2 text-center">To start chatting, type something in the text box below. <span>👇✨</span></div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
       </div>
       {/* Typing box and suggestions container */}
-      <div className="w-full flex flex-col items-center mt-2 sm:mt-4">
+      <div className="w-full flex flex-col items-center mt-2 sm:mt-4 sticky bottom-0 bg-gradient-to-t from-[#f5f6fa] to-transparent pt-4">
         <div className="w-full bg-white/90 shadow-lg rounded-xl sm:rounded-2xl p-2 sm:p-4 flex flex-col gap-2">
           <form className="flex gap-2" onSubmit={onSend}>
             <input
@@ -218,12 +220,17 @@ function App() {
         message: input,
       });
       if (res.data.sessionId && !sessionId) setSessionId(res.data.sessionId);
-      setMessages(res.data.history);
+      // Update messages by appending the new bot response to existing messages
+      setMessages(prev => [...prev, { 
+        sender: 'bot', 
+        content: res.data.history[res.data.history.length - 1].content,
+        created_at: new Date().toISOString()
+      }]);
       setSuggestions(res.data.suggestions || []);
     } catch (err) {
       setMessages(prev => [
         ...prev,
-        { sender: 'bot' as const, content: 'Sorry, something went wrong.' },
+        { sender: 'bot' as const, content: 'Sorry, something went wrong.', created_at: new Date().toISOString() },
       ]);
     } finally {
       setInput('');
